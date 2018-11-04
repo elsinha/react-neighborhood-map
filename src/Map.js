@@ -41,12 +41,12 @@ const locations =[
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
   <GoogleMap
     defaultZoom={9}
-    defaultCenter={{ lat: 36.114647, lng:  -115.172813 }}
-  >
-    {props.isMarkerShown && <Marker position={{ lat: 36.114647, lng:  -115.172813 }} />}
+    defaultCenter={{ lat: 36.114647, lng:  -115.172813 }}>
 
+    {props.listMarkers && props.listMarkers.map((marker, index) => (
+             <Marker key={index} position={{lat:marker.lat, lng:marker.lng}} />
 
-
+          ))}
   </GoogleMap>
 ));
 
@@ -55,8 +55,7 @@ export default class Map extends Component {
   render() {
     return(
       <MyMapComponent
-        {...this.state}
-        isMarkerShown
+        {...this.props}
         googleMapURL=""
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `400px` }} />}

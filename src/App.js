@@ -7,8 +7,8 @@ import axios from 'axios';
 class App extends Component {
 
 state = {
-  venues:[]
-
+  venues:[],
+  listMarkers:[]
 }
 
 componentDidMount() {
@@ -28,9 +28,15 @@ componentDidMount() {
 
     axios.get(destination + new URLSearchParams(param))
     .then(response => {
-       this.setState({
-        venues: response.data.response.groups[0].items
-      } )
+
+      this.setState({venues: response.data.response.groups[0].items});
+      const listMarkers = this.state.venues.map(venue => {
+        return {
+        lat: venue.venue.location.lat,
+        lng: venue.venue.location.lng
+        }
+      });
+      this.setState({listMarkers: listMarkers});
      })
      .catch(er => {
       console.log("was thrown error: " + er)
