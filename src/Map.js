@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import './App.js';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import {withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow} from "react-google-maps"
 
 const locations =[
   {
@@ -44,7 +44,14 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     defaultCenter={{ lat: 36.114647, lng:  -115.172813 }}>
 
     {props.listMarkers && props.listMarkers.map((marker, index) => (
-             <Marker key={index} position={{lat:marker.lat, lng:marker.lng}} />
+             <Marker key={index} position={{lat:marker.lat, lng:marker.lng}} title={marker.name}>
+             <InfoWindow>
+               <div>
+                <p> {marker.address}</p>
+                <p>{marker.name}</p>
+                </div>
+              </InfoWindow>
+             </Marker>
 
           ))}
   </GoogleMap>
