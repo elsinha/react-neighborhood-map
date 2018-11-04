@@ -33,7 +33,9 @@ componentDidMount() {
       const listMarkers = this.state.venues.map(venue => {
         return {
         lat: venue.venue.location.lat,
-        lng: venue.venue.location.lng
+        lng: venue.venue.location.lng,
+        name: venue.venue.name,
+        address: venue.venue.location.address
         }
       });
       this.setState({listMarkers: listMarkers});
