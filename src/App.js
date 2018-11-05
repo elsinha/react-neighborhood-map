@@ -2,19 +2,47 @@ import React, { Component } from 'react';
 import './App.css';
 import Map from "./Map";
 import axios from 'axios';
+import { Navbar, FormGroup } from 'react-bootstrap';
 
 
 class App extends Component {
 
 state = {
   venues:[],
-  listMarkers:[]
+  listMarkers:[],
+  query:""
 }
 
 componentDidMount() {
   this.findVenues()
 
 }
+changeQueryValue=(query)=>{
+        this.setState({query: query});
+        setTimeout(this.search, 250);;
+      }
+
+search =() =>{
+  if(this.state.query !==""){
+    //const destination = "https://api.foursquare.com/v2/venues/search?"
+    const markers =this.state.venues.map(venue => {
+      const isFilter = venue.venue.name.toLowerCase().includes(this.state.query.toLowerCase());
+      const marker = this.state.listMarkers.find(marker => marker.id === venue.venue.id);
+      if(isFilter){
+        marker.isVisible = true;
+      }
+      else{
+        marker.isVisible = false;
+      }
+      return marker;
+    });
+
+  }
+  else{
+    this.findVenues();
+  }
+}
+
 windowClickInfoMarker = marker => {
   let markers = this.state.listMarkers;
 markers.forEach(m=>{
@@ -33,8 +61,8 @@ markers.forEach(m=>{
   findVenues = () => {
     const destination = "https://api.foursquare.com/v2/venues/explore?"
     const param = {
-      client_id: "",
-      client_secret: "",
+      client_id: "JG2CPO53DQPBGCXP4UIWSW3T2OZ53MTLALRTFEOXZLTGJLYT",
+      client_secret: "G4OWTPIVJ0AB4FUELTIFVYWSMQQG2E3RU4LGRCPFJVZSDBXP",
       query: "scenic",
       near: "Las Vegas",
       v: "20181103"
@@ -51,7 +79,8 @@ markers.forEach(m=>{
         lng: venue.venue.location.lng,
         name: venue.venue.name,
         address: venue.venue.location.address,
-        isWindowOpen: false
+        isWindowOpen: false,
+        isVisible:true
         }
       });
       this.setState({listMarkers: listMarkers});
@@ -64,6 +93,24 @@ markers.forEach(m=>{
   render() {
     return (
       <div className="App">
+        <Navbar>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <p>"Scenic Las Vegas"</p>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <Navbar.Form pullLeft>
+            <FormGroup>
+              <input type="text" placeholder="Filter..." name="filte"
+              onChange={(e) => this.changeQueryValue(e.target.value)}
+             value={this.state.query} />
+            </FormGroup>{' '}
+
+          </Navbar.Form>
+        </Navbar.Collapse>
+      </Navbar>
         <Map {...this.state} windowClickInfoMarker={this.windowClickInfoMarker}/>
       </div>
     );

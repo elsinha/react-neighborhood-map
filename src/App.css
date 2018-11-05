@@ -1,0 +1,19 @@
+@media only screen and (min-width: 0px) {
+  .App {
+    max-width: 100%;
+  }
+}
+@media only screen and (min-width: 700px) {
+  .App {
+    max-width: 100%;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .App {
+    max-width: 100%;
+  }
+}
+
+.App {
+  text-align: center;
+}
