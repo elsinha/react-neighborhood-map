@@ -44,13 +44,15 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     defaultCenter={{ lat: 36.114647, lng:  -115.172813 }}>
 
     {props.listMarkers && props.listMarkers.map((marker, index) => (
-             <Marker key={index} position={{lat:marker.lat, lng:marker.lng}} title={marker.name}>
+             <Marker key={index} onClick={()=> props.windowClickInfoMarker(marker)} position={{lat:marker.lat, lng:marker.lng}} title={marker.name} animation={window.google.maps.Animation.DROP}>
+             {marker.isWindowOpen && (
              <InfoWindow>
                <div>
                 <p> {marker.address}</p>
                 <p>{marker.name}</p>
                 </div>
               </InfoWindow>
+            )}
              </Marker>
 
           ))}
