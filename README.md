@@ -16,3 +16,4 @@ Download or clone the repository. Then run the command `npm install` then `npm s
  * Google maps API
  * Foursquare API [documentation](https://developer.foursquare.com/docs/api/endpoints)
  * Axios `npm install axios`
+ * Bootstrap
