@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import List from "./List";
 import Map from "./Map";
 import axios from 'axios';
 import { Navbar, FormGroup } from 'react-bootstrap';
@@ -41,6 +42,21 @@ search =() =>{
   else{
     this.findVenues();
   }
+}
+
+windowClickOneMarker = marker =>{
+  console.log("marker"+marker);
+  let markers = this.state.listMarkers;
+markers.forEach(m=>{
+  if(m.id === marker.id){
+        m.isVisible = true;
+      }
+  else{
+      m.isVisible = false;
+    }
+  });
+
+  this.setState({listMarkers : markers});
 }
 
 windowClickInfoMarker = marker => {
@@ -86,26 +102,27 @@ markers.forEach(m=>{
       this.setState({listMarkers: listMarkers});
      })
      .catch(er => {
-      console.log("was thrown error: " + er)
+      alert("was thrown error: " + er);
      })
   }
 
   render() {
     return (
-      <div className="App">
+      <div className="App" aria-label="application">
         <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            <p>"Scenic Las Vegas"</p>
+            <p>Scenic Las Vegas</p>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Navbar.Form pullLeft>
             <FormGroup>
-              <input type="text" placeholder="Filter..." name="filte"
+              <input type="text" placeholder="Filter..." name="filter" aria-label="Search input"
               onChange={(e) => this.changeQueryValue(e.target.value)}
              value={this.state.query} />
+           <List {...this.state} windowClickOneMarker={this.windowClickOneMarker}/>
             </FormGroup>{' '}
 
           </Navbar.Form>

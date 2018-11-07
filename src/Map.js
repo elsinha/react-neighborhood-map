@@ -3,7 +3,7 @@ import './App.js';
 import {withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow} from "react-google-maps"
 
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
-  <GoogleMap
+  <GoogleMap role="application" aria-label = "map"
     defaultZoom={9}
     defaultCenter={{ lat: 36.114647, lng:  -115.172813 }}>
 
@@ -13,9 +13,9 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
               animation={window.google.maps.Animation.DROP}>
              {marker.isWindowOpen && (
              <InfoWindow>
-               <div>
+               <div tabIndex="0">
+                 <h3>{marker.name}</h3>
                 <p> {marker.address}</p>
-                <p>{marker.name}</p>
                 </div>
               </InfoWindow>
             )}
@@ -31,7 +31,7 @@ export default class Map extends Component {
     return(
       <MyMapComponent
         {...this.props}
-        googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&key=YOUR-KEY"
+        googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBlD6rXJvsaC4YN60aU2bga8_ZAGfL31sU"
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `400px` }} />}
         mapElement={<div style={{ height: `100%` }} />}
